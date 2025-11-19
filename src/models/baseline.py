@@ -5,6 +5,9 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import joblib
 import json
+import sys
+sys.path.append(str(Path(__file__).parent.parent))
+from evaluation import evaluate_model_comprehensive, print_metrics_summary
 
 class PersistenceModel:
     """
@@ -89,59 +92,7 @@ class LinearRegressionModel:
         """Load trained model."""
         self.model = joblib.load(filepath)
 
-def evaluate_model(y_true, y_pred, target_names, model_name="Model"):
-    """
-    Calculate evaluation metrics for multi-horizon predictions.
-    
-    Args:
-        y_true: True values (n_samples, n_outputs)
-        y_pred: Predictions (n_samples, n_outputs)
-        target_names: List of target names (e.g., ['WVHT_1h', 'DPD_1h', ...])
-        model_name: Name for reporting
-        
-    Returns:
-        Dictionary with metrics
-    """
-    
-    metrics = {
-        'model': model_name,
-        'overall': {},
-        'by_target': {}
-    }
-    
-    # Overall metrics
-    metrics['overall']['rmse'] = np.sqrt(mean_squared_error(y_true, y_pred))
-    metrics['overall']['mae'] = mean_absolute_error(y_true, y_pred)
-    metrics['overall']['r2'] = r2_score(y_true, y_pred)
-    
-    # Per-target metrics
-    n_targets = y_true.shape[1]
-    for i, target_name in enumerate(target_names):
-        target_metrics = {}
-        target_metrics['rmse'] = np.sqrt(mean_squared_error(y_true[:, i], y_pred[:, i]))
-        target_metrics['mae'] = mean_absolute_error(y_true[:, i], y_pred[:, i])
-        target_metrics['r2'] = r2_score(y_true[:, i], y_pred[:, i])
-        
-        metrics['by_target'][target_name] = target_metrics
-    
-    return metrics
-
-def print_metrics(metrics):
-    """Pretty print evaluation metrics."""
-    print(f"\n{metrics['model']} Results:")
-    print("=" * 50)
-    
-    print(f"Overall Performance:")
-    print(f"  RMSE: {metrics['overall']['rmse']:.4f}")
-    print(f"  MAE:  {metrics['overall']['mae']:.4f}")
-    print(f"  R²:   {metrics['overall']['r2']:.4f}")
-    
-    print(f"\nBy Target:")
-    for target_name, target_metrics in metrics['by_target'].items():
-        print(f"  {target_name}:")
-        print(f"    RMSE: {target_metrics['rmse']:.4f}")
-        print(f"    MAE:  {target_metrics['mae']:.4f}")
-        print(f"    R²:   {target_metrics['r2']:.4f}")
+# Removed - now using evaluation module functions
 
 def train_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLearning/Surf-Forecast/data"):
     """
@@ -162,9 +113,12 @@ def train_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLea
     # Load sequence data
     sequences_dir = Path(data_dir) / "splits" / station_id / "sequences"
     
-    # Load metadata
+    # Load metadata and scalers
     with open(sequences_dir / "metadata.json", 'r') as f:
         metadata = json.load(f)
+    
+    # Load target scaler for inverse transformation
+    target_scaler = joblib.load(sequences_dir / "target_scaler.pkl")
     
     target_names = metadata['target_names']
     print(f"Target variables: {target_names}")
@@ -229,10 +183,17 @@ def train_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLea
     
     # Evaluate on validation set
     y_pred_persistence = persistence_model.predict(X_val)
-    persistence_metrics = evaluate_model(y_val, y_pred_persistence, target_names, "Persistence")
-    print_metrics(persistence_metrics)
     
-    results['persistence'] = persistence_metrics
+    # Inverse transform for surf metrics calculation
+    y_val_original = target_scaler.inverse_transform(y_val)
+    y_pred_persistence_original = target_scaler.inverse_transform(y_pred_persistence)
+    
+    persistence_results = evaluate_model_comprehensive(
+        y_val_original, y_pred_persistence_original, target_names, "Persistence"
+    )
+    print_metrics_summary(persistence_results)
+    
+    results['persistence'] = persistence_results
     
     # 2. Ridge Regression Model
     print(f"\n{'-'*30}")
@@ -263,10 +224,17 @@ def train_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLea
     
     # Evaluate best model
     y_pred_ridge = best_model.predict(X_val_flat)
-    ridge_metrics = evaluate_model(y_val, y_pred_ridge, target_names, f"Ridge (α={best_alpha})")
-    print_metrics(ridge_metrics)
     
-    results['ridge'] = ridge_metrics
+    # Inverse transform for surf metrics calculation
+    y_pred_ridge_original = target_scaler.inverse_transform(y_pred_ridge)
+    
+    ridge_results = evaluate_model_comprehensive(
+        y_val_original, y_pred_ridge_original, target_names, f"Ridge (α={best_alpha})",
+        baseline_metrics=persistence_results['primary_metrics']
+    )
+    print_metrics_summary(ridge_results)
+    
+    results['ridge'] = ridge_results
     results['ridge']['best_alpha'] = best_alpha
     
     # Save best model
@@ -279,8 +247,8 @@ def train_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLea
     print("Model Comparison")
     print(f"{'-'*30}")
     
-    persistence_rmse = persistence_metrics['overall']['rmse']
-    ridge_rmse = ridge_metrics['overall']['rmse']
+    persistence_rmse = persistence_results['primary_metrics']['overall']['rmse']
+    ridge_rmse = ridge_results['primary_metrics']['overall']['rmse']
     improvement = ((persistence_rmse - ridge_rmse) / persistence_rmse) * 100
     
     print(f"Persistence RMSE: {persistence_rmse:.4f}")
@@ -300,8 +268,29 @@ def train_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLea
     
     # Save results
     results_path = sequences_dir / "baseline_results.json"
+    
+    def convert_numpy_types(obj):
+        """Convert numpy types to native Python types for JSON serialization."""
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.bool_):
+            return bool(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, dict):
+            return {key: convert_numpy_types(value) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [convert_numpy_types(item) for item in obj]
+        else:
+            return obj
+    
+    # Convert numpy types before saving
+    results_serializable = convert_numpy_types(results)
+    
     with open(results_path, 'w') as f:
-        json.dump(results, f, indent=2)
+        json.dump(results_serializable, f, indent=2)
     
     print(f"\n✓ Results saved to {results_path}")
     
@@ -331,7 +320,7 @@ def main():
     
     for station_id, results in all_results.items():
         print(f"\nStation {station_id}:")
-        improvement = results['comparison']['improvement_pct']
+        improvement = results['ridge']['comparative_metrics']['overall_improvement']['improvement_pct']
         print(f"  Ridge improvement over persistence: {improvement:.1f}%")
         
         if improvement >= 20:
