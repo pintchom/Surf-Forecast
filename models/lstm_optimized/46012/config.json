@@ -1,0 +1,17 @@
+{
+  "lstm_layers": [
+    64
+  ],
+  "dense_layers": 1,
+  "dense_units": 64,
+  "dropout_rate": 0.3,
+  "learning_rate": 0.001,
+  "batch_size": 32,
+  "optimizer": "adam",
+  "weight_decay": 0.0,
+  "max_epochs": 200,
+  "patience": 25,
+  "lstm_units_1": 64,
+  "lstm_units_2": 32,
+  "lstm_units_3": 16
+}
