@@ -624,7 +624,3 @@ wget https://www.ndbc.noaa.gov/view_text_file.php?filename=46012h{year}.txt.gz&d
 ```
 
 ---
-
-**Document Status**: Draft for Review  
-**Next Review Date**: Week 2 (after data acquisition)  
-**Approvers**: Max Pintchouk, Jason Cho
