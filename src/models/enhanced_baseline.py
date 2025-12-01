@@ -7,10 +7,11 @@ from sklearn.metrics import mean_squared_error
 import joblib
 import json
 import sys
+import argparse
 sys.path.append(str(Path(__file__).parent.parent))
 from evaluation import evaluate_model_comprehensive, print_metrics_summary
 
-def enhanced_linear_model_search(X_train_flat, y_train, X_val_flat, y_val, target_names):
+def enhanced_linear_model_search(X_train_flat, y_train, X_val_flat, y_val, target_names, exclude_elasticnet=False):
     """
     Extended hyperparameter search across multiple linear models.
     
@@ -33,17 +34,20 @@ def enhanced_linear_model_search(X_train_flat, y_train, X_val_flat, y_val, targe
         # Extended Ridge search
         ('Ridge', Ridge, {'alpha': np.logspace(-3, 3, 15)}),  # 0.001 to 1000
         
-        # ElasticNet (L1 + L2 regularization)
-        ('ElasticNet', ElasticNet, {
-            'alpha': [0.01, 0.1, 1.0, 10.0],
-            'l1_ratio': [0.1, 0.3, 0.5, 0.7, 0.9]  # Mix of L1 and L2
-        }),
-        
         # Lasso (L1 regularization - feature selection)
         ('Lasso', Lasso, {'alpha': [0.001, 0.01, 0.1, 1.0]})
         
         # RandomForest removed - too slow for this dataset size
     ]
+    
+    # Add ElasticNet if not excluded
+    if not exclude_elasticnet:
+        models_to_try.insert(1, (
+            'ElasticNet', ElasticNet, {
+                'alpha': [0.01, 0.1, 1.0, 10.0],
+                'l1_ratio': [0.1, 0.3, 0.5, 0.7, 0.9]  # Mix of L1 and L2
+            }
+        ))
     
     best_overall = {
         'model_name': None,
@@ -136,7 +140,7 @@ def enhanced_linear_model_search(X_train_flat, y_train, X_val_flat, y_val, targe
     
     return best_overall, all_results
 
-def train_enhanced_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLearning/Surf-Forecast/data"):
+def train_enhanced_baseline_models(station_id, data_dir="/Users/maxpintchouk/Code/DeepLearning/Surf-Forecast/data", exclude_elasticnet=False):
     """
     Train enhanced baseline models with extended search.
     """
@@ -178,7 +182,7 @@ def train_enhanced_baseline_models(station_id, data_dir="/Users/maxpintchouk/Cod
     
     # Enhanced model search
     best_model_info, all_results = enhanced_linear_model_search(
-        X_train_flat, y_train, X_val_flat, y_val, target_names
+        X_train_flat, y_train, X_val_flat, y_val, target_names, exclude_elasticnet
     )
     
     print(f"\n{'='*60}")
@@ -264,13 +268,29 @@ def train_enhanced_baseline_models(station_id, data_dir="/Users/maxpintchouk/Cod
 
 def main():
     """Train enhanced baseline models for all stations."""
-    stations = ['46012', '46221']
+    parser = argparse.ArgumentParser(description="Train enhanced baseline models")
+    parser.add_argument(
+        "--stations",
+        nargs="+",
+        default=['46012', '46221', '46026'],
+        help="Station IDs to train models for"
+    )
+    parser.add_argument(
+        "--exclude-elasticnet",
+        action="store_true",
+        help="Exclude ElasticNet from model search (faster training)"
+    )
+    
+    args = parser.parse_args()
     
     all_results = {}
     
-    for station_id in stations:
+    for station_id in args.stations:
         try:
-            results = train_enhanced_baseline_models(station_id)
+            results = train_enhanced_baseline_models(
+                station_id, 
+                exclude_elasticnet=args.exclude_elasticnet
+            )
             all_results[station_id] = results
             
             best_name = results['best_model']['name']

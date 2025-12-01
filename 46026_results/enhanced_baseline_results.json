@@ -1,0 +1,311 @@
+{
+  "best_model": {
+    "name": "Ridge",
+    "params": {
+      "alpha": 2.6826957952797246
+    },
+    "val_rmse": 0.49775910573428883,
+    "evaluation": {
+      "model_name": "Ridge (Best)",
+      "evaluation_timestamp": "2025-11-30T20:40:37.837624",
+      "primary_metrics": {
+        "overall": {
+          "rmse": 1.399466435568044,
+          "mae": 0.7446336617374995,
+          "r2": 0.7658783269541515
+        },
+        "by_target": {
+          "WVHT_1h": {
+            "rmse": 0.16924976227966834,
+            "mae": 0.12095691326388631,
+            "r2": 0.9573019042841077
+          },
+          "DPD_1h": {
+            "rmse": 1.7326968315237234,
+            "mae": 1.1122448991518477,
+            "r2": 0.7164243955991805
+          },
+          "WVHT_3h": {
+            "rmse": 0.24940559648860525,
+            "mae": 0.17649994556129556,
+            "r2": 0.9072543615252767
+          },
+          "DPD_3h": {
+            "rmse": 1.945753408748176,
+            "mae": 1.2982071740784782,
+            "r2": 0.6422044110841534
+          },
+          "WVHT_6h": {
+            "rmse": 0.3459669928622195,
+            "mae": 0.2452158625935898,
+            "r2": 0.8214567129208445
+          },
+          "DPD_6h": {
+            "rmse": 2.179977383901029,
+            "mae": 1.5146771757758903,
+            "r2": 0.5506281763113321
+          }
+        }
+      },
+      "surf_metrics": {
+        "good_surf_1h": {
+          "accuracy": 0.8928159499093755,
+          "precision": 0.8395130049806309,
+          "recall": 0.8079893475366179,
+          "f1_score": 0.823449586103949,
+          "true_positives": 3034,
+          "total_good_surf_days": 3755
+        },
+        "good_surf_3h": {
+          "accuracy": 0.8714780029658923,
+          "precision": 0.7983673469387755,
+          "recall": 0.7817745803357314,
+          "f1_score": 0.789983844911147,
+          "true_positives": 2934,
+          "total_good_surf_days": 3753
+        },
+        "good_surf_6h": {
+          "accuracy": 0.8394298896029,
+          "precision": 0.7462400875034181,
+          "recall": 0.7277333333333333,
+          "f1_score": 0.7368705278790334,
+          "true_positives": 2729,
+          "total_good_surf_days": 3750
+        },
+        "extreme_wave_1h": {
+          "precision": 0.86615515771526,
+          "recall": 0.8403639371381307,
+          "extreme_wave_days": 1209,
+          "detected_extreme_days": 1173
+        },
+        "extreme_wave_3h": {
+          "precision": 0.8165938864628821,
+          "recall": 0.7740066225165563,
+          "extreme_wave_days": 1208,
+          "detected_extreme_days": 1145
+        },
+        "extreme_wave_6h": {
+          "precision": 0.7428307123034228,
+          "recall": 0.6658374792703151,
+          "extreme_wave_days": 1206,
+          "detected_extreme_days": 1081
+        }
+      },
+      "confidence_intervals": {
+        "confidence_level": 0.95,
+        "n_bootstrap": 1000,
+        "rmse_mean": 1.3991702853939387,
+        "rmse_std": 0.013400571338616272,
+        "ci_lower": 1.3732501595875373,
+        "ci_upper": 1.4241886312997092,
+        "ci_width": 0.05093847171217192
+      }
+    }
+  },
+  "all_models": {
+    "Ridge": {
+      "params": {
+        "alpha": 2.6826957952797246
+      },
+      "val_rmse": 0.49775910573428883,
+      "evaluation": {
+        "model_name": "Ridge",
+        "evaluation_timestamp": "2025-11-30T20:40:38.305735",
+        "primary_metrics": {
+          "overall": {
+            "rmse": 1.399466435568044,
+            "mae": 0.7446336617374995,
+            "r2": 0.7658783269541515
+          },
+          "by_target": {
+            "WVHT_1h": {
+              "rmse": 0.16924976227966834,
+              "mae": 0.12095691326388631,
+              "r2": 0.9573019042841077
+            },
+            "DPD_1h": {
+              "rmse": 1.7326968315237234,
+              "mae": 1.1122448991518477,
+              "r2": 0.7164243955991805
+            },
+            "WVHT_3h": {
+              "rmse": 0.24940559648860525,
+              "mae": 0.17649994556129556,
+              "r2": 0.9072543615252767
+            },
+            "DPD_3h": {
+              "rmse": 1.945753408748176,
+              "mae": 1.2982071740784782,
+              "r2": 0.6422044110841534
+            },
+            "WVHT_6h": {
+              "rmse": 0.3459669928622195,
+              "mae": 0.2452158625935898,
+              "r2": 0.8214567129208445
+            },
+            "DPD_6h": {
+              "rmse": 2.179977383901029,
+              "mae": 1.5146771757758903,
+              "r2": 0.5506281763113321
+            }
+          }
+        },
+        "surf_metrics": {
+          "good_surf_1h": {
+            "accuracy": 0.8928159499093755,
+            "precision": 0.8395130049806309,
+            "recall": 0.8079893475366179,
+            "f1_score": 0.823449586103949,
+            "true_positives": 3034,
+            "total_good_surf_days": 3755
+          },
+          "good_surf_3h": {
+            "accuracy": 0.8714780029658923,
+            "precision": 0.7983673469387755,
+            "recall": 0.7817745803357314,
+            "f1_score": 0.789983844911147,
+            "true_positives": 2934,
+            "total_good_surf_days": 3753
+          },
+          "good_surf_6h": {
+            "accuracy": 0.8394298896029,
+            "precision": 0.7462400875034181,
+            "recall": 0.7277333333333333,
+            "f1_score": 0.7368705278790334,
+            "true_positives": 2729,
+            "total_good_surf_days": 3750
+          },
+          "extreme_wave_1h": {
+            "precision": 0.86615515771526,
+            "recall": 0.8403639371381307,
+            "extreme_wave_days": 1209,
+            "detected_extreme_days": 1173
+          },
+          "extreme_wave_3h": {
+            "precision": 0.8165938864628821,
+            "recall": 0.7740066225165563,
+            "extreme_wave_days": 1208,
+            "detected_extreme_days": 1145
+          },
+          "extreme_wave_6h": {
+            "precision": 0.7428307123034228,
+            "recall": 0.6658374792703151,
+            "extreme_wave_days": 1206,
+            "detected_extreme_days": 1081
+          }
+        },
+        "confidence_intervals": {
+          "confidence_level": 0.95,
+          "n_bootstrap": 1000,
+          "rmse_mean": 1.3997608123947403,
+          "rmse_std": 0.013184366436782693,
+          "ci_lower": 1.3733923705607298,
+          "ci_upper": 1.426682715335623,
+          "ci_width": 0.05329034477489314
+        }
+      }
+    },
+    "Lasso": {
+      "params": {
+        "alpha": 0.001
+      },
+      "val_rmse": 0.49828553628221506,
+      "evaluation": {
+        "model_name": "Lasso",
+        "evaluation_timestamp": "2025-11-30T20:40:38.783041",
+        "primary_metrics": {
+          "overall": {
+            "rmse": 1.3962637220227376,
+            "mae": 0.7384488724123216,
+            "r2": 0.7655311498713978
+          },
+          "by_target": {
+            "WVHT_1h": {
+              "rmse": 0.1744940928744509,
+              "mae": 0.12504249720063335,
+              "r2": 0.9546148442085307
+            },
+            "DPD_1h": {
+              "rmse": 1.7277011492280172,
+              "mae": 1.0942142405835893,
+              "r2": 0.718057239111947
+            },
+            "WVHT_3h": {
+              "rmse": 0.25287222998681064,
+              "mae": 0.17877779048920467,
+              "r2": 0.9046581920352026
+            },
+            "DPD_3h": {
+              "rmse": 1.9397342693170825,
+              "mae": 1.2819505644871645,
+              "r2": 0.6444146505119315
+            },
+            "WVHT_6h": {
+              "rmse": 0.34824758291741276,
+              "mae": 0.24580778482174073,
+              "r2": 0.8190950650316609
+            },
+            "DPD_6h": {
+              "rmse": 2.175804462689477,
+              "mae": 1.504900356891588,
+              "r2": 0.5523469083291006
+            }
+          }
+        },
+        "surf_metrics": {
+          "good_surf_1h": {
+            "accuracy": 0.8935574229691877,
+            "precision": 0.837120175198467,
+            "recall": 0.8143808255659121,
+            "f1_score": 0.8255939524838013,
+            "true_positives": 3058,
+            "total_good_surf_days": 3755
+          },
+          "good_surf_3h": {
+            "accuracy": 0.8712308452792882,
+            "precision": 0.7962662337662337,
+            "recall": 0.7841726618705036,
+            "f1_score": 0.7901731776077325,
+            "true_positives": 2943,
+            "total_good_surf_days": 3753
+          },
+          "good_surf_6h": {
+            "accuracy": 0.8405009062448509,
+            "precision": 0.7439483593329748,
+            "recall": 0.7376,
+            "f1_score": 0.7407605784681307,
+            "true_positives": 2766,
+            "total_good_surf_days": 3750
+          },
+          "extreme_wave_1h": {
+            "precision": 0.8679896462467644,
+            "recall": 0.8320926385442514,
+            "extreme_wave_days": 1209,
+            "detected_extreme_days": 1159
+          },
+          "extreme_wave_3h": {
+            "precision": 0.8176100628930818,
+            "recall": 0.7533112582781457,
+            "extreme_wave_days": 1208,
+            "detected_extreme_days": 1113
+          },
+          "extreme_wave_6h": {
+            "precision": 0.7531340405014465,
+            "recall": 0.6475953565505804,
+            "extreme_wave_days": 1206,
+            "detected_extreme_days": 1037
+          }
+        },
+        "confidence_intervals": {
+          "confidence_level": 0.95,
+          "n_bootstrap": 1000,
+          "rmse_mean": 1.3965618537779134,
+          "rmse_std": 0.012558972116489571,
+          "ci_lower": 1.372299989095338,
+          "ci_upper": 1.4209476610471767,
+          "ci_width": 0.04864767195183872
+        }
+      }
+    }
+  }
+}

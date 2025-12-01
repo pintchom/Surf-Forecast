@@ -256,7 +256,7 @@ def process_station_sequences(station_id, lookback_hours=24, forecast_horizons=[
 
 def main():
     """Process all stations to create sequence data."""
-    stations = ['46012', '46221']
+    stations = ['46012', '46221', '46026']
     
     for station_id in stations:
         try:

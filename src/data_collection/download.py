@@ -2,7 +2,7 @@
 NOAA Buoy Data Downloader
 
 Downloads historical buoy data from NOAA National Data Buoy Center.
-Supports stations 46012 (Half Moon Bay) and 46221 (Santa Barbara).
+Supports stations 46012 (Half Moon Bay), 46221 (Santa Monica), and 46026 (San Francisco).
 """
 
 import requests
@@ -49,7 +49,7 @@ class NOAABuoyDownloader:
 
     def download_all_data(
         self,
-        stations: List[str] = ["46012", "46221"],
+        stations: List[str] = ["46012", "46221", "46026"],
         start_year: int = 2018,
         end_year: int = 2024,
     ) -> Dict[str, List[int]]:
@@ -152,7 +152,7 @@ class NOAABuoyDownloader:
 
         return combined_df
 
-    def save_combined_data(self, stations: List[str] = ["46012", "46221"]):
+    def save_combined_data(self, stations: List[str] = ["46012", "46221", "46026"]):
         processed_dir = Path("data/processed")
         processed_dir.mkdir(parents=True, exist_ok=True)
 
@@ -175,7 +175,7 @@ def main():
     parser.add_argument(
         "--stations",
         nargs="+",
-        default=["46012", "46221"],
+        default=["46012", "46221", "46026"],
         help="Station IDs to download",
     )
     parser.add_argument("--start-year", type=int, default=2018, help="Start year")

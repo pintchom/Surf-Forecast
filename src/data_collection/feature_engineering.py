@@ -188,7 +188,7 @@ def process_station(station_id, data_dir="/Users/maxpintchouk/Code/DeepLearning/
     return feature_summary
 
 def main():
-    stations = ['46012', '46221']
+    stations = ['46012', '46221', '46026']
     
     for station_id in stations:
         try:

@@ -173,7 +173,7 @@ def main():
     parser.add_argument(
         "--stations",
         nargs="+",
-        default=["46012", "46221"],
+        default=["46012", "46221", "46026"],
         help="Station IDs to process",
     )
 

@@ -7,7 +7,7 @@
     "val_rmse": 0.5050551386770136,
     "evaluation": {
       "model_name": "Lasso (Best)",
-      "evaluation_timestamp": "2025-11-16T14:35:14.405093",
+      "evaluation_timestamp": "2025-11-30T20:32:34.521822",
       "primary_metrics": {
         "overall": {
           "rmse": 1.3023616330437036,
@@ -94,11 +94,11 @@
       "confidence_intervals": {
         "confidence_level": 0.95,
         "n_bootstrap": 1000,
-        "rmse_mean": 1.3022719703408956,
-        "rmse_std": 0.015029932501756937,
-        "ci_lower": 1.2740177839942588,
-        "ci_upper": 1.3336049382775352,
-        "ci_width": 0.05958715428327643
+        "rmse_mean": 1.3019963741669636,
+        "rmse_std": 0.015068270965229788,
+        "ci_lower": 1.2741861891651234,
+        "ci_upper": 1.3309714011940315,
+        "ci_width": 0.05678521202890807
       }
     }
   },
@@ -110,7 +110,7 @@
       "val_rmse": 0.5067395869841371,
       "evaluation": {
         "model_name": "Ridge",
-        "evaluation_timestamp": "2025-11-16T14:35:14.707956",
+        "evaluation_timestamp": "2025-11-30T20:32:34.824047",
         "primary_metrics": {
           "overall": {
             "rmse": 1.313263255398219,
@@ -197,114 +197,11 @@
         "confidence_intervals": {
           "confidence_level": 0.95,
           "n_bootstrap": 1000,
-          "rmse_mean": 1.3129476771694668,
-          "rmse_std": 0.014892610365649823,
-          "ci_lower": 1.2848041030975286,
-          "ci_upper": 1.3423953951417464,
-          "ci_width": 0.05759129204421787
-        }
-      }
-    },
-    "ElasticNet": {
-      "params": {
-        "alpha": 0.01,
-        "l1_ratio": 0.1
-      },
-      "val_rmse": 0.5093056116911853,
-      "evaluation": {
-        "model_name": "ElasticNet",
-        "evaluation_timestamp": "2025-11-16T14:35:15.005771",
-        "primary_metrics": {
-          "overall": {
-            "rmse": 1.3115221961434504,
-            "mae": 0.730850799164623,
-            "r2": 0.7139412222310999
-          },
-          "by_target": {
-            "WVHT_1h": {
-              "rmse": 0.2561326964836019,
-              "mae": 0.18809342567124326,
-              "r2": 0.9201834050727361
-            },
-            "DPD_1h": {
-              "rmse": 1.6440859384437494,
-              "mae": 1.05780460606679,
-              "r2": 0.6610035145340345
-            },
-            "WVHT_3h": {
-              "rmse": 0.3438175990493051,
-              "mae": 0.2524997243653076,
-              "r2": 0.8561698031356358
-            },
-            "DPD_3h": {
-              "rmse": 1.8056452259792606,
-              "mae": 1.192781898139431,
-              "r2": 0.5908625320854617
-            },
-            "WVHT_6h": {
-              "rmse": 0.44919934811746415,
-              "mae": 0.32896366684106343,
-              "r2": 0.7544484162364768
-            },
-            "DPD_6h": {
-              "rmse": 1.9928810844599654,
-              "mae": 1.3649614739038922,
-              "r2": 0.5009796623222458
-            }
-          }
-        },
-        "surf_metrics": {
-          "good_surf_1h": {
-            "accuracy": 0.861455446988479,
-            "precision": 0.8690737833594977,
-            "recall": 0.8385337776431384,
-            "f1_score": 0.8535306814677768,
-            "true_positives": 2768,
-            "total_good_surf_days": 3301
-          },
-          "good_surf_3h": {
-            "accuracy": 0.8408925185941374,
-            "precision": 0.8439738399252569,
-            "recall": 0.8212121212121212,
-            "f1_score": 0.8324374136077407,
-            "true_positives": 2710,
-            "total_good_surf_days": 3300
-          },
-          "good_surf_6h": {
-            "accuracy": 0.8105585533031938,
-            "precision": 0.8056234718826406,
-            "recall": 0.7990300090936647,
-            "f1_score": 0.8023131943387612,
-            "true_positives": 2636,
-            "total_good_surf_days": 3299
-          },
-          "extreme_wave_1h": {
-            "precision": 0.8846704871060171,
-            "recall": 0.8338960162052668,
-            "extreme_wave_days": 1481,
-            "detected_extreme_days": 1396
-          },
-          "extreme_wave_3h": {
-            "precision": 0.8513313609467456,
-            "recall": 0.7771775827143822,
-            "extreme_wave_days": 1481,
-            "detected_extreme_days": 1352
-          },
-          "extreme_wave_6h": {
-            "precision": 0.7895962732919255,
-            "recall": 0.6866981769074949,
-            "extreme_wave_days": 1481,
-            "detected_extreme_days": 1288
-          }
-        },
-        "confidence_intervals": {
-          "confidence_level": 0.95,
-          "n_bootstrap": 1000,
-          "rmse_mean": 1.3110394426186727,
-          "rmse_std": 0.015456748489589618,
-          "ci_lower": 1.280636108368059,
-          "ci_upper": 1.3425779096285484,
-          "ci_width": 0.061941801260489315
+          "rmse_mean": 1.312773743476413,
+          "rmse_std": 0.015225851969890547,
+          "ci_lower": 1.2837313472956113,
+          "ci_upper": 1.3430301582804816,
+          "ci_width": 0.05929881098487022
         }
       }
     },
@@ -315,7 +212,7 @@
       "val_rmse": 0.5050551386770136,
       "evaluation": {
         "model_name": "Lasso",
-        "evaluation_timestamp": "2025-11-16T14:35:15.303435",
+        "evaluation_timestamp": "2025-11-30T20:32:35.124969",
         "primary_metrics": {
           "overall": {
             "rmse": 1.3023616330437036,
@@ -402,11 +299,11 @@
         "confidence_intervals": {
           "confidence_level": 0.95,
           "n_bootstrap": 1000,
-          "rmse_mean": 1.3021116269536577,
-          "rmse_std": 0.015584251851310387,
-          "ci_lower": 1.2708169134127383,
-          "ci_upper": 1.3322882860409946,
-          "ci_width": 0.061471372628256304
+          "rmse_mean": 1.3028088479202,
+          "rmse_std": 0.015084029975271585,
+          "ci_lower": 1.2738311934299715,
+          "ci_upper": 1.3331188565594156,
+          "ci_width": 0.05928766312944411
         }
       }
     }
